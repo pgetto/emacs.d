@@ -9,12 +9,6 @@
 ;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
 ;;(setq debug-on-error t)
 
-(let ((minver "25.1"))
-  (when (version< emacs-version minver)
-    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
-(when (version< emacs-version "26.1")
-  (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
-
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-benchmarking) ;; Measure startup time
 
@@ -46,15 +40,25 @@
 (require 'init-preload-local nil t)
 
 ;; Load configs for specific features and modes
-(require-package 'diminish)
-(maybe-require-package 'scratch)
-(require-package 'command-log-mode)
+(use-package diminish)
+(use-package scratch)
+;; (use-package command-log-mode)
 
+
+
+;; Frame / theme config
 (require 'init-frame-hooks)
 (require 'init-xterm)
 (require 'init-themes)
 (require 'init-osx-keys)
 (require 'init-gui-frames)
+
+(use-package which-key
+             :init (which-key-mode)
+             :diminish which-key-mode
+             :config (setq which-key-idle-delay 1.5))
+
+
 (require 'init-dired)
 (require 'init-isearch)
 (require 'init-grep)
@@ -63,7 +67,7 @@
 (require 'init-flycheck)
 
 (require 'init-recentf)
-(require 'init-minibuffer)
+(require 'init-minibuffer) ;; This depends on a variable from init-projectile
 (require 'init-hippie-expand)
 (require 'init-company)
 (require 'init-windows)
@@ -74,7 +78,7 @@
 (require 'init-whitespace)
 
 (require 'init-vc)
-(require 'init-darcs)
+;; (require 'init-darcs)
 (require 'init-git)
 (require 'init-github)
 
@@ -82,35 +86,35 @@
 
 (require 'init-compile)
 (require 'init-crontab)
-(require 'init-textile)
+;; (require 'init-textile)
 (require 'init-markdown)
 (require 'init-csv)
-(require 'init-erlang)
+;; (require 'init-erlang)
 (require 'init-javascript)
-(require 'init-php)
-(require 'init-org)
-(require 'init-nxml)
-(require 'init-html)
+;; (require 'init-php)
+;; (require 'init-org)
+;; (require 'init-nxml)
+(require 'init-html) ;; May need some customization for Rails views
 (require 'init-css)
-(require 'init-haml)
+;; (require 'init-haml)
 (require 'init-http)
-(require 'init-python)
-(require 'init-haskell)
-(require 'init-elm)
-(require 'init-purescript)
+;; (require 'init-python)
+;; (require 'init-haskell)
+;; (require 'init-elm)
+;; (require 'init-purescript)
 (require 'init-ruby)
 (require 'init-rails)
 (require 'init-sql)
-(require 'init-ocaml)
-(require 'init-j)
-(require 'init-nim)
+;; (require 'init-ocaml)
+;; (require 'init-j)
+;; (require 'init-nim)
 (require 'init-rust)
-(require 'init-toml)
+;; (require 'init-toml)
 (require 'init-yaml)
-(require 'init-docker)
-(require 'init-terraform)
-(require 'init-nix)
-(maybe-require-package 'nginx-mode)
+;; (require 'init-docker)
+;; (require 'init-terraform)
+;; (require 'init-nix)
+;; (maybe-require-package 'nginx-mode)
 
 (require 'init-paredit)
 (require 'init-lisp)
@@ -125,39 +129,40 @@
 (require 'init-misc)
 
 (require 'init-folding)
-(require 'init-dash)
+;; (require 'init-dash)
 
-;;(require 'init-twitter)
+;; (require 'init-twitter)
 ;; (require 'init-mu)
-(require 'init-ledger)
+;; (require 'init-ledger)
+
 ;; Extra packages which don't require any configuration
 
-(require-package 'sudo-edit)
-(require-package 'gnuplot)
-(require-package 'lua-mode)
-(require-package 'htmlize)
-(when *is-a-mac*
-  (require-package 'osx-location))
-(maybe-require-package 'dotenv-mode)
-(maybe-require-package 'shfmt)
+(use-package sudo-edit)
+;; (require-package 'gnuplot)
+;; (require-package 'lua-mode)
+;; (require-package 'htmlize)
+;; (when *is-a-mac*
+;;   (require-package 'osx-location))
+;; (maybe-require-package 'dotenv-mode)
+;; (maybe-require-package 'shfmt)
 
-(when (maybe-require-package 'uptimes)
-  (setq-default uptimes-keep-count 200)
-  (add-hook 'after-init-hook (lambda () (require 'uptimes))))
+;; (when (maybe-require-package 'uptimes)
+;;   (setq-default uptimes-keep-count 200)
+;;   (add-hook 'after-init-hook (lambda () (require 'uptimes))))
 
-(when (fboundp 'global-eldoc-mode)
-  (add-hook 'after-init-hook 'global-eldoc-mode))
+;; (when (fboundp 'global-eldoc-mode)
+;;   (add-hook 'after-init-hook 'global-eldoc-mode))
 
-(require 'init-direnv)
+;; (require 'init-direnv)
 
 
 
 ;; Allow access from emacsclient
-(add-hook 'after-init-hook
-          (lambda ()
-            (require 'server)
-            (unless (server-running-p)
-              (server-start))))
+;; (add-hook 'after-init-hook
+;;           (lambda ()
+;;             (require 'server)
+;;             (unless (server-running-p)
+;;               (server-start))))
 
 ;; Variables configured via the interactive 'customize' interface
 (when (file-exists-p custom-file)

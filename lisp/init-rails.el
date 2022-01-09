@@ -6,6 +6,7 @@
   (add-hook 'projectile-mode-hook
             (lambda () (projectile-rails-global-mode projectile-mode))))
 
+(define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
 
 (provide 'init-rails)
 ;;; init-rails.el ends here
