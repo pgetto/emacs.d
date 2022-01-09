@@ -107,6 +107,11 @@
 (dolist (mode (list 'js-mode 'js2-mode 'js3-mode))
   (mmm-add-mode-ext-class mode "\\.js\\.erb\\'" 'erb))
 
+
+;; Flycheck - use standard
+
+(add-hook 'ruby-mode-hook
+          (lambda () (flycheck-select-checker 'ruby-standard)))
 
 
 ;; Ruby - my convention for heredocs containing SQL
