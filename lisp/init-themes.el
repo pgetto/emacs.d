@@ -2,8 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (require-package 'color-theme-sanityinc-solarized)
-;; (require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'color-theme-sanityinc-solarized)
+(require-package 'color-theme-sanityinc-tomorrow)
 
 ;; (load-theme 'wombat)
 ;; (use-package modus-themes
@@ -18,7 +18,8 @@
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
-  (load-theme 'doom-monokai-pro t))
+  ;(load-theme 'doom-monokai-pro t)
+  )
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
@@ -29,7 +30,8 @@
 (setq custom-safe-themes t)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(doom-dark+))
+;; (setq-default custom-enabled-themes '(doom-dark+))
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -48,13 +50,13 @@
 (defun light ()
   "Activate a light color theme."
   (interactive)
-  (setq custom-enabled-themes '(doom-tomorrow-day))
+  (setq custom-enabled-themes '(sanityinc-tomorrow-day))
   (reapply-themes))
 
 (defun dark ()
   "Activate a dark color theme."
   (interactive)
-  (setq custom-enabled-themes '(doom-dark+))
+  (setq custom-enabled-themes '(sanityinc-tomorrow-bright))
   (reapply-themes))
 
 
