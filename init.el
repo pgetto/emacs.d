@@ -46,25 +46,15 @@
 (require 'init-preload-local nil t)
 
 ;; Load configs for specific features and modes
-(use-package diminish)
-(use-package scratch)
-;; (use-package command-log-mode)
+(require-package 'diminish)
+(maybe-require-package 'scratch)
+(require-package 'command-log-mode)
 
-
-
-;; Frame / theme config
 (require 'init-frame-hooks)
 (require 'init-xterm)
 (require 'init-themes)
 (require 'init-osx-keys)
 (require 'init-gui-frames)
-
-(use-package which-key
-             :init (which-key-mode)
-             :diminish which-key-mode
-             :config (setq which-key-idle-delay 1.5))
-
-
 (require 'init-dired)
 (require 'init-isearch)
 (require 'init-grep)
@@ -74,7 +64,7 @@
 (require 'init-eglot)
 
 (require 'init-recentf)
-(require 'init-minibuffer) ;; This depends on a variable from init-projectile
+(require 'init-minibuffer)
 (require 'init-hippie-expand)
 (require 'init-corfu)
 (require 'init-windows)
@@ -85,7 +75,7 @@
 (require 'init-whitespace)
 
 (require 'init-vc)
-;; (require 'init-darcs)
+(require 'init-darcs)
 (require 'init-git)
 (require 'init-github)
 
@@ -96,13 +86,13 @@
 ;; (require 'init-textile)
 (require 'init-markdown)
 (require 'init-csv)
-;; (require 'init-erlang)
+(require 'init-erlang)
 (require 'init-elixir)
 (require 'init-javascript)
 ;; (require 'init-php)
-;; (require 'init-org)
+(require 'init-org)
 ;; (require 'init-nxml)
-(require 'init-html) ;; May need some customization for Rails views
+(require 'init-html)
 (require 'init-css)
 ;; (require 'init-haml)
 (require 'init-http)
@@ -145,12 +135,12 @@
 
 ;; Extra packages which don't require any configuration
 
-(use-package sudo-edit)
+(require-package 'sudo-edit)
 ;; (require-package 'gnuplot)
 ;; (require-package 'lua-mode)
 ;; (require-package 'htmlize)
-;; (when *is-a-mac*
-;;   (require-package 'osx-location))
+(when *is-a-mac*
+  (require-package 'osx-location))
 ;; (maybe-require-package 'dotenv-mode)
 ;; (maybe-require-package 'shfmt)
 
@@ -161,16 +151,16 @@
 ;; (when (fboundp 'global-eldoc-mode)
 ;;   (add-hook 'after-init-hook 'global-eldoc-mode))
 
-;; (require 'init-direnv)
+(require 'init-direnv)
 
 
 
 ;; Allow access from emacsclient
-;; (add-hook 'after-init-hook
-;;           (lambda ()
-;;             (require 'server)
-;;             (unless (server-running-p)
-;;               (server-start))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (unless (server-running-p)
+              (server-start))))
 
 ;; Variables configured via the interactive 'customize' interface
 (when (file-exists-p custom-file)

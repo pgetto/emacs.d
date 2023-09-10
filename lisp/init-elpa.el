@@ -60,18 +60,10 @@ locate PACKAGE."
      nil)))
 
 
-;;; Fire up package.el and use-package
+;;; Fire up package.el
 
 (setq package-enable-at-startup nil)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
-
 
 
 ;; package.el updates the saved version of package-selected-packages correctly only
