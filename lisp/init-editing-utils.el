@@ -97,8 +97,8 @@
 
 
 
-(use-package rainbow-delimiters
-  :hook (prog-mode-hook . 'rainbow-delimiters-mode))
+(when (require-package 'rainbow-delimiters)
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 
 (when (maybe-require-package 'symbol-overlay)
