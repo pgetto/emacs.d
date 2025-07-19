@@ -133,6 +133,18 @@ there is no current file, eval the current buffer."
   (add-hook 'after-init-hook 'auto-compile-on-load-mode))
 
 
+(defun sanityinc/trust-current-file ()
+  "Quickly mark current elisp file as trusted content."
+  (interactive)
+  (if-let ((file (and (derived-mode-p 'emacs-lisp-mode)
+                      (buffer-file-name))))
+      (progn (push file trusted-content)
+             (when (bound-and-true-p flymake-mode)
+               (flymake-mode nil)
+               (flymake-mode)))
+    (user-error "Can't find or trust this buffer's file")))
+
+
 ;; Load .el if newer than corresponding .elc
 
 (setq load-prefer-newer t)
@@ -179,26 +191,10 @@ there is no current file, eval the current buffer."
   "Enable features useful in any Lisp mode."
   (run-hooks 'sanityinc/lispy-modes-hook))
 
-(defun sanityinc/emacs-lisp-setup ()
-  "Enable features useful when working with elisp."
-  (set-up-hippie-expand-for-elisp))
-
-(defconst sanityinc/elispy-modes
-  '(emacs-lisp-mode ielm-mode)
-  "Major modes relating to elisp.")
-
-(defconst sanityinc/lispy-modes
-  (append sanityinc/elispy-modes
-          '(lisp-mode inferior-lisp-mode lisp-interaction-mode))
-  "All lispy major modes.")
-
 (require 'derived)
 
-(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/lispy-modes))
-  (add-hook hook 'sanityinc/lisp-setup))
-
-(dolist (hook (mapcar #'derived-mode-hook-name sanityinc/elispy-modes))
-  (add-hook hook 'sanityinc/emacs-lisp-setup))
+(dolist (mode '(emacs-lisp-mode ielm-mode lisp-mode inferior-lisp-mode lisp-interaction-mode))
+  (add-hook (derived-mode-hook-name mode) 'sanityinc/lisp-setup))
 
 (when (boundp 'eval-expression-minibuffer-setup-hook)
   (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode))
